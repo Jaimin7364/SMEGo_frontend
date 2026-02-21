@@ -2,9 +2,9 @@
 import DashboardShell from '@/components/layout/DashboardShell'
 import { invoiceService } from '@/services/invoiceService'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
-export default function PaymentSuccessPage() {
+function PaymentSuccessInner() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [invoice, setInvoice] = useState<any>(null)
@@ -162,5 +162,13 @@ export default function PaymentSuccessPage() {
         </div>
       </div>
     </DashboardShell>
+  )
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={<DashboardShell><div className="p-6">Loading...</div></DashboardShell>}>
+      <PaymentSuccessInner />
+    </Suspense>
   )
 }

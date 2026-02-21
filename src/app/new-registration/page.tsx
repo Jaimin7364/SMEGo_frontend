@@ -38,7 +38,8 @@ export default function NewRegistrationFlowPage() {
       country: 'IN'
     },
     taxId: 'DEMO123456789',
-    invoicePrefix: 'DEMO'
+    invoicePrefix: 'DEMO',
+    acceptTerms: true
   })
 
   const [adminData] = useState<AdminAccountData>({

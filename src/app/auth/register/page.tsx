@@ -9,6 +9,7 @@ interface RegisterPageProps {
 
 export default async function RegisterPage({ searchParams }: RegisterPageProps) {
   const params = await searchParams
+  const mode = params.mode === 'create' || params.mode === 'join' ? params.mode : undefined
   
   return (
     <div className="min-h-screen relative bg-gradient-to-br from-blue-50 via-white to-indigo-50 py-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -78,8 +79,7 @@ export default async function RegisterPage({ searchParams }: RegisterPageProps) 
       <div className="relative z-10 flex items-center justify-center min-h-screen">
         <div className="w-full max-w-7xl mx-auto">
           <RegisterForm 
-            inviteToken={params.invite}
-            mode={params.mode}
+            mode={mode}
           />
         </div>
       </div>

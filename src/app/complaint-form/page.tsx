@@ -8,12 +8,12 @@ import Select from '@/components/ui/Select'
 import Textarea from '@/components/ui/Textarea'
 import { AlertCircle, CheckCircle, FileText, Mail, Phone } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 
-export default function ComplaintForm() {
+function ComplaintFormInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
@@ -37,8 +37,6 @@ export default function ComplaintForm() {
     const email = searchParams.get('email')
     const name = searchParams.get('name')
 
-    console.log('URL Parameters:', { invoice, org, email, name })
-
     setFormData(prev => ({
       ...prev,
       invoiceNumber: invoice || '',
@@ -59,8 +57,8 @@ export default function ComplaintForm() {
     setError('')
 
     // Basic validation
-    if (!formData.clientName.trim() || !formData.clientEmail.trim() || 
-        !formData.subject.trim() || !formData.description.trim() || 
+    if (!formData.clientName.trim() || !formData.clientEmail.trim() ||
+        !formData.subject.trim() || !formData.description.trim() ||
         !formData.organizationId.trim()) {
       setError('Please fill in all required fields')
       setIsSubmitting(false)
@@ -68,7 +66,6 @@ export default function ComplaintForm() {
     }
 
     try {
-      console.log('Submitting complaint with data:', formData)
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/complaints/submit`, {
         method: 'POST',
         headers: {
@@ -77,9 +74,7 @@ export default function ComplaintForm() {
         body: JSON.stringify(formData),
       })
 
-      console.log('Response status:', response.status)
       const result = await response.json()
-      console.log('Response data:', result)
 
       if (result.success) {
         setSubmitted(true)
@@ -87,7 +82,6 @@ export default function ComplaintForm() {
         setError(result.message || 'Failed to submit complaint. Please try again.')
       }
     } catch (err) {
-      console.error('Complaint submission error:', err)
       setError('Failed to submit complaint. Please check your connection and try again.')
     } finally {
       setIsSubmitting(false)
@@ -119,8 +113,8 @@ export default function ComplaintForm() {
             <p className="text-gray-600 mb-6">
               Your complaint has been submitted successfully. We will review it and get back to you soon.
             </p>
-            <Button 
-              onClick={() => window.close()} 
+            <Button
+              onClick={() => window.close()}
               className="w-full bg-green-600 hover:bg-green-700"
             >
               Close
@@ -135,7 +129,6 @@ export default function ComplaintForm() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="max-w-2xl mx-auto">
         <Card className="shadow-lg">
-          {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-t-lg p-6">
             <div className="flex items-center gap-2 mb-2">
               <FileText className="h-6 w-6" />
@@ -145,7 +138,7 @@ export default function ComplaintForm() {
               We value your feedback. Please provide details about your concern and we'll address it promptly.
             </p>
           </div>
-          
+
           <div className="p-6">
             {error && (
               <div className="mb-6 p-4 border border-red-200 bg-red-50 rounded-md flex items-start gap-2">
@@ -157,7 +150,6 @@ export default function ComplaintForm() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Client Information */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm font-medium text-gray-700 mb-1 block">
@@ -171,7 +163,7 @@ export default function ComplaintForm() {
                     required
                   />
                 </div>
-                
+
                 <div>
                   <Label className="text-sm font-medium text-gray-700 mb-1 block">
                     Email Address *
@@ -220,7 +212,6 @@ export default function ComplaintForm() {
                 </div>
               </div>
 
-              {/* Complaint Details */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Select
@@ -258,31 +249,42 @@ export default function ComplaintForm() {
 
               <div>
                 <Label className="text-sm font-medium text-gray-700 mb-1 block">
-                  Detailed Description *
+                  Description *
                 </Label>
                 <Textarea
                   value={formData.description}
                   onChange={(e) => handleInputChange('description', e.target.value)}
-                  placeholder="Please provide detailed information about your complaint or inquiry..."
-                  className="min-h-[120px]"
+                  placeholder="Please provide detailed information about your complaint or inquiry"
+                  rows={4}
                   required
                 />
               </div>
 
-              <div className="flex gap-4 pt-4">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
+                <div className="flex gap-2 items-start">
+                  <AlertCircle className="h-4 w-4 mt-0.5" />
+                  <div>
+                    <p className="font-semibold">Need immediate assistance?</p>
+                    <p>If your issue is urgent, please contact our support team at <a href="mailto:support@smego.com" className="underline">support@smego.com</a> or call our 24/7 hotline.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
                 <Button
                   type="submit"
+                  className="bg-blue-600 hover:bg-blue-700"
                   disabled={isSubmitting}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Complaint'}
                 </Button>
+
                 <Button
                   type="button"
-                  onClick={() => window.close()}
-                  className="flex-1 bg-gray-500 hover:bg-gray-600"
+                  variant="outline"
+                  onClick={() => router.push('/')}
                 >
-                  Cancel
+                  Back to Home
                 </Button>
               </div>
             </form>
@@ -290,5 +292,13 @@ export default function ComplaintForm() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function ComplaintForm() {
+  return (
+    <Suspense fallback={<div className="p-6">Loading...</div>}>
+      <ComplaintFormInner />
+    </Suspense>
   )
 }

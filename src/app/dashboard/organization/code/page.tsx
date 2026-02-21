@@ -14,9 +14,13 @@ const OrganizationCodePage = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
+  const [origin, setOrigin] = useState('')
 
   useEffect(() => {
     fetchOrganizationInfo()
+    if (typeof window !== 'undefined') {
+      setOrigin(window.location.origin)
+    }
   }, [])
 
   const fetchOrganizationInfo = async () => {
@@ -51,8 +55,8 @@ const OrganizationCodePage = () => {
     }
   }
 
-  const employeeJoinUrl = `${window.location.origin}/auth/employee/join`
-  const clientJoinUrl = `${window.location.origin}/auth/client/join`
+  const employeeJoinUrl = origin ? `${origin}/auth/employee/join` : ''
+  const clientJoinUrl = origin ? `${origin}/auth/client/join` : ''
 
   if (loading) {
     return (

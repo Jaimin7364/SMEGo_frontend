@@ -37,7 +37,8 @@ export default function TestRegistrationPage() {
       country: 'IN'
     },
     taxId: 'TEST123456789',
-    invoicePrefix: 'SME'
+    invoicePrefix: 'SME',
+    acceptTerms: true
   })
 
   const [adminData] = useState<AdminAccountData>({
