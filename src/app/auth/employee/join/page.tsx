@@ -1,3 +1,4 @@
+"use client"
 
 import EmployeeJoinForm from '@/components/forms/registration/EmployeeJoinForm'
 import { useState } from 'react'
