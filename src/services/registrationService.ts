@@ -7,7 +7,7 @@ import {
 } from '@/types/registration'
 import { mockRegistrationService } from './mockRegistrationService'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://168.144.0.93:5000/api'
 const USE_MOCK_SERVICE = process.env.NEXT_PUBLIC_USE_MOCK_REGISTRATION === 'true'
 
 class RegistrationService {

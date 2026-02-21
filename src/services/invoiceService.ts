@@ -120,11 +120,11 @@ export const invoiceService = {
     return res.data
   },
 
-  pdfUrl: (id: string) => `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/invoices/${id}/pdf`,
+  pdfUrl: (id: string) => `${process.env.NEXT_PUBLIC_API_URL || 'http://168.144.0.93:5000/api'}/invoices/${id}/pdf`,
 
   downloadPdf: async (id: string) => {
     const token = localStorage.getItem('token')
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/invoices/${id}/pdf`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://168.144.0.93:5000/api'}/invoices/${id}/pdf`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     if (!response.ok) throw new Error('Failed to download PDF')

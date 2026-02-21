@@ -1,6 +1,6 @@
 // import { EmployeeJoinData } from '@/types/registration'
 // import api from "@/lib/axios"
-// const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api'
+// const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://168.144.0.93:5000/api'
 
 // export const employeeService = {
 //   async joinOrganization(data: EmployeeJoinData) {
@@ -42,7 +42,7 @@
 import { EmployeeJoinData } from '@/types/registration'
 import api from '@/lib/axios'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:5000/api'
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://168.144.0.93:5000/api'
 
 // ------------------ Types ------------------
 export interface Employee {

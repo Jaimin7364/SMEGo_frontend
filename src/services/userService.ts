@@ -27,7 +27,7 @@ interface UpdateUserData {
   isActive?: boolean
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://168.144.0.93:5000/api'
 
 // Types aligned with backend user profile
 export interface UserProfile {

@@ -66,7 +66,7 @@ function ComplaintFormInner() {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/complaints/submit`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://168.144.0.93:5000/api'}/complaints/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

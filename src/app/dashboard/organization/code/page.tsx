@@ -25,7 +25,7 @@ const OrganizationCodePage = () => {
 
   const fetchOrganizationInfo = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/organization/current', {
+      const response = await fetch('http://168.144.0.93:5000/api/organization/current', {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
